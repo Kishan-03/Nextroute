@@ -1,0 +1,246 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  FACULTY
+  COMPANY
+  ADMIN
+}
+
+model User {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  passwordHash    String?
+  role            Role             @default(STUDENT)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  resumes         Resume[]
+  aiReports       AiReport[]
+  recommendations Recommendation[]
+  trendReports    TrendReport[]
+}
+
+model Resume {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fileName  String
+  fileUrl   String?
+  atsScore  Float         @default(0)
+  roleMatch Float         @default(0)
+  summary   String?
+  createdAt DateTime      @default(now())
+  skills    ResumeSkill[]
+  reports   AiReport[]
+}
+
+model ResumeSkill {
+  id         String  @id @default(cuid())
+  resumeId   String
+  resume     Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  name       String
+  category   String?
+  confidence Float   @default(0)
+
+  @@index([resumeId])
+}
+
+model AiReport {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resumeId  String?
+  resume    Resume?  @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  type      String
+  title     String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@index([userId, type])
+}
+
+model Recommendation {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String
+  title     String
+  reason    String
+  url       String?
+  priority  Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model TrendReport {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  horizonMonths Int
+  generatedAt   DateTime @default(now())
+  payload       Json
+}
+
+model IndustryDemand {
+  id              String   @id @default(cuid())
+  state           String
+  district        String
+  industry        String
+  skill           String
+  enrollments     Int      @default(0)
+  openRoles       Int      @default(0)
+  shortageIndex   Float    @default(0)
+  medianSalary    Int      @default(0)
+  experienceYears Int      @default(0)
+  recordedAt      DateTime @default(now())
+
+  @@index([state, district, industry])
+}
+
+model Collaboration {
+  id          String   @id @default(cuid())
+  companyName String
+  industry    String
+  type        String
+  description String
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+}
+
+model MsmeSurvey {
+  id             String   @id @default(cuid())
+  businessName   String
+  phone          String
+  district       String
+  industry       String
+  hiringDemand   Int
+  requiredSkills Json
+  source         String
+  createdAt      DateTime @default(now())
+}
+
+model Apprenticeship {
+  id          String   @id @default(cuid())
+  companyName String
+  title       String
+  district    String
+  skills      Json
+  openings    Int
+  stipend     Int?
+  createdAt   DateTime @default(now())
+}
+
+model SkillBounty {
+  id          String   @id @default(cuid())
+  companyName String
+  title       String
+  description String
+  skill       String
+  reward      Int
+  status      String   @default("OPEN")
+  createdAt   DateTime @default(now())
+}
+
+model JobSkill {
+  id       String  @id @default(cuid())
+  jobId    String
+  skill    String
+  required Boolean @default(true)
+  level    String  @default("INTERMEDIATE")
+  weight   Int     @default(1)
+
+  @@index([jobId])
+}
+
+model StudentSkill {
+  id        String  @id @default(cuid())
+  studentId String
+  skill     String
+  level     String  @default("INTERMEDIATE")
+  score     Float   @default(0)
+  verified  Boolean @default(false)
+
+  @@unique([studentId, skill])
+}
+
+model SkillMatch {
+  id                 String   @id @default(cuid())
+  studentId          String
+  jobId              String
+  overallMatch       Float
+  skillMatch         Float
+  technicalMatch     Float
+  projectMatch       Float
+  certificationMatch Float
+  experienceMatch    Float
+  createdAt          DateTime @default(now())
+
+  @@unique([studentId, jobId])
+}
+
+model MissingSkill {
+  id            String @id @default(cuid())
+  matchId       String
+  skill         String
+  category      String
+  priority      String
+  currentScore  Float  @default(0)
+  requiredScore Float  @default(0)
+}
+
+model LearningRoadmap {
+  id             String   @id @default(cuid())
+  studentId      String
+  jobId          String
+  estimatedWeeks Int
+  difficulty     String
+  progress       Float    @default(0)
+  steps          Json
+  updatedAt      DateTime @updatedAt
+  createdAt      DateTime @default(now())
+}
+
+model RecommendedJob {
+  id            String   @id @default(cuid())
+  studentId     String
+  jobId         String
+  match         Float
+  reason        String
+  missingSkills Json
+  createdAt     DateTime @default(now())
+}
+
+model RecommendedCourse {
+  id         String @id @default(cuid())
+  studentId  String
+  courseName String
+  skill      String
+  reason     String
+  priority   Int    @default(0)
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  studentId String
+  jobId     String
+  status    String   @default("APPLIED")
+  createdAt DateTime @default(now())
+
+  @@unique([studentId, jobId])
+}
+
+model AssessmentResult {
+  id        String   @id @default(cuid())
+  studentId String
+  jobId     String?
+  title     String
+  score     Float
+  createdAt DateTime @default(now())
+}

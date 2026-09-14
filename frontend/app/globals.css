@@ -1,0 +1,9 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+* { box-sizing: border-box } body { margin: 0; background: #090b16; color: #f7f7fb; font-family: Arial, sans-serif } .glass { background: rgba(22,25,45,.72); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(16px) }
+.panel { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 1rem; padding: 1.5rem; }
+.stat { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 1rem; padding: 1.25rem; }
+.stat p { margin-top: 1.25rem; color: #94a3b8; font-size: .875rem; }
+.stat strong { display: block; margin-top: .25rem; font-size: 1.875rem; }
+.bridge-stat { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 1rem; padding: 1.25rem; }
+.bridge-stat p { margin-top: 1rem; color: #94a3b8; font-size: .875rem; }
+.bridge-stat strong { display: block; margin-top: .25rem; font-size: 1.875rem; }
