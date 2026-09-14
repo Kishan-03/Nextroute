@@ -9,3 +9,4 @@ prisma/dev.db
 prisma/dev.db-journal
 backend/uploads/
 backend/data/local-store.json
+backend/tools/python/
