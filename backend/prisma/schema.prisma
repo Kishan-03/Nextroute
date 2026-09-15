@@ -26,6 +26,68 @@ model User {
   aiReports       AiReport[]
   recommendations Recommendation[]
   trendReports    TrendReport[]
+  posts            CommunityPost[]
+  replies          CommunityReply[]
+  badges           StudentBadge[]
+  skills           StudentSkill[]
+  companyProfile   CompanyProfile?
+}
+
+model CompanyProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName String
+  industry    String
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model CodeRun {
+  id              String   @id @default(cuid())
+  studentId       String
+  language        String
+  status          String
+  executionTimeMs Int
+  createdAt       DateTime @default(now())
+
+  @@index([studentId, createdAt])
+}
+
+model CommunityPost {
+  id        String               @id @default(cuid())
+  authorId  String
+  author    User                 @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  replies   CommunityReply[]
+  likes     CommunityPostLike[]
+
+  @@index([createdAt])
+}
+
+model CommunityReply {
+  id        String        @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime      @default(now())
+
+  @@index([postId, createdAt])
+}
+
+model CommunityPostLike {
+  id        String        @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime      @default(now())
+
+  @@unique([postId, userId])
+  @@index([postId])
 }
 
 model Resume {
@@ -162,12 +224,36 @@ model JobSkill {
 model StudentSkill {
   id        String  @id @default(cuid())
   studentId String
+  student   User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
   skill     String
   level     String  @default("INTERMEDIATE")
   score     Float   @default(0)
   verified  Boolean @default(false)
 
   @@unique([studentId, skill])
+}
+
+model SkillBadge {
+  id          String         @id @default(cuid())
+  key         String         @unique
+  name        String
+  icon        String
+  description String
+  skillName   String
+  students    StudentBadge[]
+}
+
+model StudentBadge {
+  id         String     @id @default(cuid())
+  studentId  String
+  student    User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  badgeId    String
+  badge      SkillBadge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  earnedAt   DateTime   @default(now())
+  sourceType String
+
+  @@unique([studentId, badgeId])
+  @@index([studentId])
 }
 
 model SkillMatch {
