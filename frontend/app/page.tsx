@@ -50,7 +50,7 @@ export default function Home() {
   const initials = (user?.name ?? "User").split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();
   const showMessage = (text: string) => { setMessage(text); window.setTimeout(() => setMessage(""), 2600); };
 
-  return <main className={`${dark ? "bg-[#090b16] text-white" : "bg-slate-100 text-slate-950"} min-h-screen transition-colors`}>
+  return <main className={`dashboard-shell ${dark ? "bg-[#07111f] text-white" : "bg-slate-100 text-slate-950"} min-h-screen transition-colors`}>
     {message && <div className="fixed right-5 top-5 z-50 rounded-xl bg-violet-500 px-4 py-3 text-sm font-medium shadow-xl">{message}</div>}
     <aside className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed z-20 flex h-screen w-72 flex-col overflow-y-auto bg-[#0d1020] p-6 text-white transition-transform lg:translate-x-0`}>
       <div className="mb-12 flex items-center justify-between"><div className="flex items-center gap-3"><div className="rounded-xl bg-violet-500 p-2"><Sparkles size={20}/></div><span className="text-xl font-bold">Nextroute</span></div><button onClick={() => setSidebarOpen(false)} className="lg:hidden" aria-label="Close menu"><X/></button></div>

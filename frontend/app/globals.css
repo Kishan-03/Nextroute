@@ -1,9 +1,83 @@
 @tailwind base; @tailwind components; @tailwind utilities;
-* { box-sizing: border-box } body { margin: 0; background: #090b16; color: #f7f7fb; font-family: Arial, sans-serif } .glass { background: rgba(22,25,45,.72); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(16px) }
-.panel { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 1rem; padding: 1.5rem; }
-.stat { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 1rem; padding: 1.25rem; }
+* { box-sizing: border-box } body { margin: 0; background: radial-gradient(circle at 75% -10%, rgba(30,96,150,.2), transparent 32rem), #070b18; color: #f7f7fb; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility } .glass { background: linear-gradient(145deg, rgba(20,30,60,.8), rgba(12,18,40,.7)); border: 1px solid rgba(112,190,255,.12); box-shadow: 0 18px 50px rgba(0,0,0,.18); backdrop-filter: blur(18px) }
+.text-3xl, .text-4xl { letter-spacing: -.025em; line-height: 1.15; }
+.text-2xl, h2 { letter-spacing: -.01em; line-height: 1.3; }
+.text-xs { line-height: 1.4; letter-spacing: .01em; }
+button, input, select, textarea { font: inherit; }
+/* Landing page visual layer: keeps all existing links/content, changes presentation only */
+main:has(> nav) { background: #f3fbfa !important; color: #102b35 !important; }
+main:has(> nav) nav { color: #547078 !important; }
+main:has(> nav) nav > div:first-child > div { background: #0d4b4d !important; color: #9ff0d7; border-radius: 1rem; }
+main:has(> nav) nav > div:first-child { color: #102b35 !important; }
+main:has(> nav) section { color: #102b35; }
+main:has(> nav) section h1, main:has(> nav) section h2 { color: #102b35 !important; letter-spacing: -.045em; }
+main:has(> nav) section p { color: #5b737a; }
+main:has(> nav) section a { border-radius: 1rem; transition: transform .2s ease, box-shadow .2s ease; }
+main:has(> nav) section a:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(13,75,77,.12); }
+main:has(> nav) section article { border-radius: 1.5rem; border-color: #ccebe4 !important; background: rgba(255,255,255,.82) !important; box-shadow: 0 12px 30px rgba(36,91,97,.07); }
+main:has(> nav) section article:hover { border-color: #8ddccc !important; transform: translateY(-3px); transition: transform .2s ease, border-color .2s ease; }
+main:has(> nav) footer { background: rgba(255,255,255,.7) !important; border-color: #cde7e1 !important; }
+/* Dashboard analytics cards: crisp dark-bold typography */
+main > section > div.p-5 > div.mt-6 > div h2,
+main > section > div.p-5 > div.mt-6 > div h3 { color: #10213b !important; font-weight: 800 !important; letter-spacing: -.015em; }
+main > section > div.p-5 > div.mt-6 > div p,
+main > section > div.p-5 > div.mt-6 > div select,
+main > section > div.p-5 > div.mt-6 > div button { color: #243b53 !important; font-weight: 600 !important; }
+main > section > div.p-5 > div.mt-6 > div p.text-slate-500 { color: #526b82 !important; font-weight: 500 !important; }
+/* Latest Nextroute dark-first SaaS design tokens */
+:root { --nr-bg: #07111f; --nr-surface: #101c2d; --nr-surface-2: #142338; --nr-border: rgba(255,255,255,.08); --nr-text: #f8fafc; --nr-secondary: #94a3b8; --nr-muted: #64748b; --nr-blue: #3b82f6; --nr-cyan: #22d3ee; }
+.dashboard-shell { background: radial-gradient(circle at 80% -10%, rgba(59,130,246,.16), transparent 30rem), #07111f !important; color: #f8fafc !important; }
+.dashboard-shell > aside { background: #0a1424 !important; color: #f8fafc !important; border-right: 1px solid rgba(255,255,255,.08) !important; }
+.dashboard-shell > section { background: #07111f !important; color: #f8fafc !important; }
+.dashboard-shell > section > header { background: #0a1424 !important; border-bottom: 1px solid rgba(255,255,255,.08) !important; }
+.dashboard-shell .stat, .dashboard-shell .panel { background: #101c2d !important; border: 1px solid rgba(255,255,255,.08) !important; color: #f8fafc !important; }
+.dashboard-shell .text-slate-400 { color: #94a3b8 !important; }
+.dashboard-shell .text-slate-500 { color: #64748b !important; }
+.dashboard-shell h1, .dashboard-shell h2, .dashboard-shell h3, .dashboard-shell strong { color: #f8fafc !important; }
+body { background: radial-gradient(circle at 75% -15%, rgba(59,130,246,.13), transparent 34rem), var(--nr-bg) !important; color: var(--nr-text); }
+main > section { background: var(--nr-bg) !important; color: var(--nr-text) !important; }
+main > aside { background: #0a1424 !important; border-right: 1px solid var(--nr-border); color: var(--nr-text) !important; box-shadow: 12px 0 32px rgba(0,0,0,.2); }
+main > aside .text-white { color: var(--nr-text) !important; }
+main > aside .text-slate-400, main > aside .text-slate-500 { color: var(--nr-secondary) !important; }
+main > aside nav button { border-radius: 10px; }
+main > aside nav button:hover { background: rgba(59,130,246,.1) !important; border-color: rgba(96,165,250,.2); }
+main > aside nav button.bg-violet-500\/15 { background: rgba(59,130,246,.16) !important; border-color: rgba(96,165,250,.35); box-shadow: inset 3px 0 var(--nr-blue), 0 0 24px rgba(59,130,246,.1); }
+main > section > header { background: rgba(7,17,31,.82) !important; border-color: var(--nr-border) !important; }
+main > section > header .text-slate-400, main > section > header .text-slate-500 { color: var(--nr-secondary) !important; }
+.panel, .glass { background: var(--nr-surface) !important; border-color: var(--nr-border) !important; }
+.stat { background: var(--nr-surface-2) !important; border-color: var(--nr-border) !important; color: var(--nr-text); }
+main > section > div.p-5 > div.grid > button:nth-child(1), main > section > div.p-5 > div.grid > button:nth-child(2), main > section > div.p-5 > div.grid > button:nth-child(3), main > section > div.p-5 > div.grid > button:nth-child(4) { background: var(--nr-surface-2) !important; color: var(--nr-text) !important; }
+main > section > div.p-5 > div.grid > button:nth-child(-n+4) p { color: inherit !important; }
+main > section > div.p-5 > div.grid > button:nth-child(-n+4) span { color: var(--nr-secondary) !important; }
+.panel { border: 1px solid rgba(112,190,255,.12); background: linear-gradient(145deg, rgba(20,28,58,.68), rgba(12,16,35,.72)); border-radius: 1.25rem; padding: 1.5rem; box-shadow: 0 16px 40px rgba(0,0,0,.16); transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+.panel:hover { border-color: rgba(77,208,255,.28); box-shadow: 0 18px 48px rgba(0,0,0,.24); }
+.stat { border: 1px solid rgba(112,190,255,.14); background: linear-gradient(145deg, rgba(24,31,67,.76), rgba(14,19,42,.72)); border-radius: 1.25rem; padding: 1.25rem; box-shadow: inset 0 1px rgba(255,255,255,.04), 0 14px 30px rgba(0,0,0,.14); transition: transform .2s ease, border-color .2s ease; }
+.stat:hover { transform: translateY(-2px); border-color: rgba(217,76,255,.38); }
 .stat p { margin-top: 1.25rem; color: #94a3b8; font-size: .875rem; }
 .stat strong { display: block; margin-top: .25rem; font-size: 1.875rem; }
 .bridge-stat { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 1rem; padding: 1.25rem; }
 .bridge-stat p { margin-top: 1rem; color: #94a3b8; font-size: .875rem; }
 .bridge-stat strong { display: block; margin-top: .25rem; font-size: 1.875rem; }
+/* Nextroute dashboard visual layer: presentation-only overrides for the existing layout */
+main > aside { background: linear-gradient(180deg, #0d1730 0%, #080d20 100%) !important; border-right: 1px solid rgba(91,200,255,.14); box-shadow: 18px 0 50px rgba(0,0,0,.18); }
+body { background: #e5eaf1; }
+main > section { background: #f6f8fc !important; color: #13213b; }
+main > aside { background: linear-gradient(180deg, #dff1ff 0%, #cfe7f7 100%) !important; border-right: 1px solid #c3dceb; box-shadow: 10px 0 30px rgba(45,78,112,.08); color: #13213b; }
+main > aside .text-white, main > aside .text-slate-400, main > aside .text-slate-500 { color: #38506b !important; }
+main > aside .text-violet-200 { color: #163f68 !important; }
+main > section > header { background: rgba(246,248,252,.9) !important; border-color: #dce6f0 !important; }
+main > section > header .text-slate-400, main > section > header .text-slate-500 { color: #667b91 !important; }
+main > aside nav button { border: 1px solid transparent; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+main > aside nav button:hover { border-color: rgba(73,207,255,.24); transform: translateX(2px); }
+main > aside nav button.bg-violet-500\/15 { background: linear-gradient(90deg, rgba(39,115,190,.34), rgba(142,61,193,.26)) !important; border-color: rgba(74,211,255,.3); box-shadow: 0 0 24px rgba(41,163,221,.12); }
+main > section > header { background: rgba(8,14,31,.72); backdrop-filter: blur(18px); box-shadow: 0 8px 30px rgba(0,0,0,.12); }
+main > section > div.p-5 > div.grid > button { background: linear-gradient(145deg, rgba(23,41,80,.72), rgba(14,21,47,.82)) !important; border-color: rgba(74,201,255,.17) !important; box-shadow: 0 12px 28px rgba(0,0,0,.16); }
+main > section > div.p-5 > div.grid > button:hover { border-color: rgba(234,85,255,.55) !important; box-shadow: 0 0 26px rgba(184,61,255,.14); }
+main > section > div.p-5 > div.mt-6 > div { background: linear-gradient(145deg, rgba(20,34,70,.66), rgba(11,18,40,.8)); border-color: rgba(74,201,255,.15); box-shadow: 0 16px 38px rgba(0,0,0,.16); }
+main > section > div.p-5 > div.grid > button:nth-child(1) { background: linear-gradient(135deg, #bcecff, #71c9ec) !important; color: #07172e !important; }
+main > section > div.p-5 > div.grid > button:nth-child(2) { background: linear-gradient(135deg, #d9f7ff, #9edbf0) !important; color: #07172e !important; }
+main > section > div.p-5 > div.grid > button:nth-child(3) { background: linear-gradient(135deg, #e8d8ff, #c3a8ed) !important; color: #17102c !important; }
+main > section > div.p-5 > div.grid > button:nth-child(4) { background: linear-gradient(135deg, #d7f4e7, #9edecb) !important; color: #08251e !important; }
+main > section > div.p-5 > div.grid > button:nth-child(-n+4) p { color: inherit !important; }
+main > section > div.p-5 > div.grid > button:nth-child(-n+4) span { color: #15536d !important; }
+main > section > div.p-5 > div.grid > button:nth-child(-n+4) > div:first-child > span { background: rgba(255,255,255,.48) !important; }

@@ -1,2 +1,2 @@
 import type { Config } from "tailwindcss";
-export default { content: ["./app/**/*.{ts,tsx}"], theme: { extend: { colors: { ink: "#090b16" } } }, plugins: [] } satisfies Config;
+export default { content: ["./app/**/*.{ts,tsx}"], theme: { extend: { colors: { ink: "#090b16" }, fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"] }, fontSize: { dashboard: ["2.5rem", { lineHeight: "1.15", letterSpacing: "-0.025em" }], metric: ["2.125rem", { lineHeight: "1.1", letterSpacing: "-0.03em" }] } } }, plugins: [] } satisfies Config;
